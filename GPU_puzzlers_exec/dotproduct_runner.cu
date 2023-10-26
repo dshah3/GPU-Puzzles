@@ -44,8 +44,6 @@ void runKernel() {
     assert(C[0] == expected_dot_product);
 
     std::cout << "Dot product successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {

@@ -2,10 +2,10 @@
 #include <cassert>
 #include <cuda_runtime.h>
 
-extern __global__ void Map2D(float* A, float* C, float size);
+extern __global__ void Map2DBlock(float* A, float* C, float size);
 
 void runKernel() {
-    const int size = 4;
+    const int size = 6;
     float A[size][size], C[size][size];
 
     for (int i = 0; i < size; i++) {
@@ -19,11 +19,13 @@ void runKernel() {
     cudaMalloc(&d_A, (size * size) * sizeof(float));
     cudaMalloc(&d_C, (size * size) * sizeof(float));
 
-    dim3 blockDim(size, size);
+    dim3 threadsPerBlock(size - 1, size - 1);
+    dim3 blocksPerGrid(((size + threadsPerBlock.x - 1) / threadsPerBlock.x),
+                        (((size + threadsPerBlock.y - 1) / threadsPerBlock.y)));
 
     cudaMemcpy(d_A, A, (size * size) * sizeof(float), cudaMemcpyHostToDevice);
 
-    Map2D<<<1, blockDim>>>(d_A, d_C, size);
+    Map2DBlock<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_C, size);
 
     cudaMemcpy(C, d_C, (size * size) * sizeof(float), cudaMemcpyDeviceToHost);
 
@@ -37,7 +39,6 @@ void runKernel() {
     }
 
     std::cout << "2D mapping successful" << std::endl;
-    return 0;
 }
 
 int main() {

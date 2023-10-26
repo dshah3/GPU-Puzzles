@@ -2,10 +2,10 @@
 #include <cassert>
 #include <cuda_runtime.h>
 
-extern __global__ void Blocks(float* A, float* C, float size);
+extern __global__ void Pooling(float* A, float* C, float size);
 
 void runKernel() {
-    const int size = 5;
+    const int size = 4;
     float A[size], C[size];
 
     for (int i = 0; i < size; i++) {
@@ -19,10 +19,11 @@ void runKernel() {
 
     cudaMemcpy(d_A, A, size * sizeof(float), cudaMemcpyHostToDevice);
 
-    int threadsPerBlock = size - 1;
+    int threadsPerBlock = size;
     int blocksPerGrid = (size + threadsPerBlock - 1) / threadsPerBlock;
+    int shared_size = threadsPerBlock * sizeof(float);
 
-    Blocks<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_C, size);
+    Pooling<<<blocksPerGrid, threadsPerBlock, shared_size>>>(d_A, d_C, size);
 
     cudaMemcpy(C, d_C, size * sizeof(float), cudaMemcpyDeviceToHost);
 
@@ -30,11 +31,12 @@ void runKernel() {
     cudaFree(d_C);
 
     for (int i = 0; i < size; i++) {
-        assert(C[i] == A[i] + 10);
+        if (i >= 2) {
+            assert(C[i] == A[i] + A[i-1] + A[i-2]);
+        }
     }
 
-    std::cout << "Blocks successful!" << std::endl;
-    return 0;
+    std::cout << "Pooling successful!" << std::endl;
 }
 
 int main() {

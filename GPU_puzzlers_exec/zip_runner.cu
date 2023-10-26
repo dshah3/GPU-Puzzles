@@ -35,8 +35,6 @@ void runKernel() {
     }
 
     std::cout << "Vector addition successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {

@@ -35,7 +35,6 @@ void runKernel() {
     }
 
     std::cout << "Shared successful!" << std::endl;
-    return 0;
 }
 
 int main() {

@@ -37,8 +37,6 @@ void runKernel() {
     assert(C[0] == 10);
 
     std::cout << "Axis sum successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {

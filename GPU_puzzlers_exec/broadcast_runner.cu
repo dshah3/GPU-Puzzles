@@ -42,7 +42,6 @@ void runKernel() {
     }
 
     std::cout << "Broadcast successful" << std::endl;
-    return 0;
 }
 
 int main() {

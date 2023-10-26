@@ -31,8 +31,6 @@ void runKernel() {
     }
 
     std::cout << "Guards successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {

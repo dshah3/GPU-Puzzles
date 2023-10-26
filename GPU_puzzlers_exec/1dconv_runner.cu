@@ -52,8 +52,6 @@ void runKernel() {
     }
 
     std::cout << "1D Convolution successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {

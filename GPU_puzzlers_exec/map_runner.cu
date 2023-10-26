@@ -31,8 +31,6 @@ void runKernel() {
     }
 
     std::cout << "Scalar addition is successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {

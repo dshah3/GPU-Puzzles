@@ -44,8 +44,6 @@ void runKernel() {
     assert(C[1][1] == 2);
 
     std::cout << "Matrix multiplication successful!" << std::endl;
-
-    return 0;
 }
 
 int main() {
