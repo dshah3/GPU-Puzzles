@@ -43,7 +43,6 @@ warnings.filterwarnings(
     action="ignore", category=numba.NumbaPerformanceWarning, module="numba"
 )
 
-
 # ## Puzzle 1: Map
 #
 # Implement a "kernel" (GPU function) that adds 10 to each position of vector `a`
