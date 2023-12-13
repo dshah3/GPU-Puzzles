@@ -2,7 +2,7 @@
 #include <cassert>
 #include <cuda_runtime.h>
 
-extern __global__ void Guards(float* A, float* C, float size);
+extern __global__ void Guards(float* A, float* C, int size);
 
 void runKernel() {
     const int size = 3;
